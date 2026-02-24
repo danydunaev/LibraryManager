@@ -39,6 +39,7 @@ LibraryManager/
 │ ├── Book.cs # Книга
 │ ├── Author.cs # Автор
 │ └── Genre.cs # Жанр
+| └── BookGenre.cs
 ├── Data/ # Работа с базой данных
 │ └── AppDbContext.cs # Контекст Entity Framework
 ├── ViewModels/ # ViewModel'и
