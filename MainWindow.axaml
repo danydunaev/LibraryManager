@@ -1,0 +1,90 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:LibraryManager.ViewModels"
+        mc:Ignorable="d"
+        x:Class="LibraryManager.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Управление библиотекой"
+        Width="1200"
+        Height="620"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+    <!-- Убираем все явные фоны у дочерних элементов -->
+    <DockPanel LastChildFill="True">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="12" Margin="12">
+            <TextBox Width="280"
+                     Watermark="Поиск по названию"
+                     Text="{Binding SearchText}"/>
+            <ComboBox Width="220"
+                      ItemsSource="{Binding Authors}"
+                      SelectedItem="{Binding SelectedAuthorFilter}"
+                      PlaceholderText="Автор">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding FullName}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <ComboBox Width="220"
+                      ItemsSource="{Binding Genres}"
+                      SelectedItem="{Binding SelectedGenreFilter}"
+                      PlaceholderText="Жанр">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <!-- ИЗМЕНЕНО: заменен Command на Click -->
+            <Button Content="Сбросить фильтры" Click="ResetFilters_Click" Width="150"/>
+        </StackPanel>
+
+        <Grid Margin="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- У DataGrid часто есть свой фон – принудительно задаём его от темы -->
+            <DataGrid ItemsSource="{Binding Books}"
+                      SelectedItem="{Binding SelectedBook}"
+                      AutoGenerateColumns="False"
+                      Grid.Column="0"
+                      MinHeight="420"
+                      Background="{DynamicResource ThemeBackgroundBrush}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Название" Binding="{Binding Title}" Width="2*"/>
+                    <DataGridTextColumn Header="Автор" Binding="{Binding AuthorName}" Width="*"/>
+                    <DataGridTextColumn Header="Жанры" Binding="{Binding GenresList}" Width="2*"/>
+                    <DataGridTextColumn Header="Год" Binding="{Binding PublishYear}" Width="70"/>
+                    <DataGridTextColumn Header="ISBN" Binding="{Binding ISBN}" Width="150"/>
+                    <DataGridTextColumn Header="В наличии" Binding="{Binding QuantityInStock}" Width="90"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Grid.Column="1" Width="220" Margin="16 0 0 0" Spacing="10">
+                <Button Content="Добавить книгу"
+                        Command="{Binding AddBookCommand}"
+                        Height="42"/>
+                <Button Content="Редактировать"
+                        Command="{Binding EditBookCommand}"
+                        Height="42"/>
+                <Button Content="Удалить"
+                        Command="{Binding DeleteBookCommand}"
+                        Height="42"/>
+                <Separator/>
+                <Button Content="Авторы"
+                        Command="{Binding ManageAuthorsCommand}"
+                        Height="38"/>
+                <Button Content="Жанры"
+                        Command="{Binding ManageGenresCommand}"
+                        Height="38"/>
+                <TextBlock Text="{Binding AvailabilitySummary}"
+                           TextWrapping="Wrap"
+                           FontWeight="SemiBold"
+                           Margin="0 24 0 0"/>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+</Window>

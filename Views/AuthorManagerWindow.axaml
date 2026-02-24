@@ -1,0 +1,55 @@
+<Window xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:dgrid="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls.DataGrid"
+  xmlns:vm="clr-namespace:LibraryManager.ViewModels"
+  xmlns:models="clr-namespace:LibraryManager.Models"
+  mc:Ignorable="d"
+  x:Class="LibraryManager.Views.AuthorManagerWindow"
+  x:DataType="vm:AuthorManagerViewModel"
+  Width="800"
+  Height="500"
+  Title="Авторы">
+  <DockPanel LastChildFill="True" Margin="12">
+    <TextBlock DockPanel.Dock="Top"
+               Text="Управление авторами"
+               FontSize="20"
+               FontWeight="Bold"
+               Margin="0 0 0 12"/>
+
+    <Grid ColumnDefinitions="3*,2*" ColumnSpacing="8">
+      <dgrid:DataGrid ItemsSource="{Binding Authors}"
+            SelectedItem="{Binding SelectedAuthor}"
+            Grid.Column="0"
+            AutoGenerateColumns="False">
+        <dgrid:DataGrid.Columns>
+          <dgrid:DataGridTextColumn Header="Имя" Binding="{Binding FirstName}" Width="*"/>
+          <dgrid:DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}" Width="*"/>
+          <dgrid:DataGridTextColumn Header="Страна" Binding="{Binding Country}" Width="*"/>
+          <dgrid:DataGridTextColumn Header="Дата рождения" Binding="{Binding BirthDate}" Width="*"/>
+        </dgrid:DataGrid.Columns>
+      </dgrid:DataGrid>
+
+      <StackPanel Grid.Column="1" Spacing="8">
+        <TextBlock Text="Имя"/>
+        <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Text="Фамилия"/>
+        <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Text="Страна"/>
+        <TextBox Text="{Binding Country, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Text="Дата рождения"/>
+        <DatePicker SelectedDate="{Binding BirthDate}"/>
+        <TextBlock Text="{Binding ErrorMessage}"
+                   Foreground="Red"
+                   TextWrapping="Wrap"
+                   MinHeight="40"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+          <Button Content="Добавить" Command="{Binding AddAuthorCommand}" Width="100"/>
+          <Button Content="Сохранить" Command="{Binding UpdateAuthorCommand}" Width="100"/>
+          <Button Content="Удалить" Command="{Binding DeleteAuthorCommand}" Width="100"/>
+        </StackPanel>
+      </StackPanel>
+    </Grid>
+  </DockPanel>
+</Window>

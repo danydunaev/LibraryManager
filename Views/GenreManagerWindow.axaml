@@ -1,0 +1,49 @@
+<Window xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:dgrid="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls.DataGrid"
+  xmlns:vm="clr-namespace:LibraryManager.ViewModels"
+  xmlns:models="clr-namespace:LibraryManager.Models"
+  mc:Ignorable="d"
+  x:Class="LibraryManager.Views.GenreManagerWindow"
+  x:DataType="vm:GenreManagerViewModel"
+  Width="720"
+  Height="440"
+  Title="Жанры">
+  <DockPanel LastChildFill="True" Margin="12">
+    <TextBlock DockPanel.Dock="Top"
+               Text="Управление жанрами"
+               FontSize="20"
+               FontWeight="Bold"
+               Margin="0 0 0 12"/>
+
+    <Grid ColumnDefinitions="2*,3*" ColumnSpacing="8">
+      <dgrid:DataGrid ItemsSource="{Binding Genres}"
+            SelectedItem="{Binding SelectedGenre}"
+            Grid.Column="0"
+            AutoGenerateColumns="False">
+        <dgrid:DataGrid.Columns>
+          <dgrid:DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="*"/>
+          <dgrid:DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="2*"/>
+        </dgrid:DataGrid.Columns>
+      </dgrid:DataGrid>
+
+      <StackPanel Grid.Column="1" Spacing="8">
+        <TextBlock Text="Название"/>
+        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Text="Описание"/>
+        <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" Height="120"/>
+        <TextBlock Text="{Binding ErrorMessage}"
+                   Foreground="Red"
+                   TextWrapping="Wrap"
+                   MinHeight="40"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+          <Button Content="Добавить" Command="{Binding AddGenreCommand}" Width="100"/>
+          <Button Content="Сохранить" Command="{Binding UpdateGenreCommand}" Width="100"/>
+          <Button Content="Удалить" Command="{Binding DeleteGenreCommand}" Width="100"/>
+        </StackPanel>
+      </StackPanel>
+    </Grid>
+  </DockPanel>
+</Window>

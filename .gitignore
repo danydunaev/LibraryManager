@@ -1,0 +1,24 @@
+## .NET Core
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+*.swp
+*.sln.docstates
+
+## Visual Studio Code
+.vscode/
+.vs/
+
+## Entity Framework
+/Migrations/*.Designer.cs
+/Migrations/*.cs
+
+## Database
+*.db
+*.db-journal
+
+## Logs
+*.log
+logs/

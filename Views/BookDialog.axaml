@@ -1,0 +1,84 @@
+<Window xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:vm="clr-namespace:LibraryManager.ViewModels"
+  xmlns:models="clr-namespace:LibraryManager.Models"
+  mc:Ignorable="d"
+  x:Class="LibraryManager.Views.BookDialog"
+  x:DataType="vm:BookDialogViewModel"
+  Width="480"
+  Height="600"
+  WindowStartupLocation="CenterOwner"
+  CanResize="False">
+  <Border Padding="24">
+    <StackPanel Spacing="12">
+      <TextBlock Text="{Binding DialogTitle}" FontSize="18" FontWeight="Bold"/>
+
+      <StackPanel Spacing="8">
+        <TextBlock Text="Название"/>
+        <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
+      </StackPanel>
+
+      <StackPanel Spacing="8">
+        <TextBlock Text="Автор"/>
+        <ComboBox ItemsSource="{Binding Authors}"
+                  SelectedItem="{Binding SelectedAuthor}"
+                  PlaceholderText="Выберите автора">
+          <ComboBox.ItemTemplate>
+            <DataTemplate x:DataType="models:Author">
+              <TextBlock Text="{Binding FullName}"/>
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+      </StackPanel>
+
+      <StackPanel Spacing="8">
+        <TextBlock Text="Жанры (можно выбрать несколько)"/>
+        <ListBox Name="GenresListBox"
+                 ItemsSource="{Binding Genres}"
+                 SelectionMode="Multiple"
+                 MaxHeight="150"
+                 BorderBrush="Gray"
+                 BorderThickness="1">
+          <ListBox.ItemTemplate>
+            <DataTemplate x:DataType="models:Genre">
+              <TextBlock Text="{Binding Name}"/>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBlock Text="{Binding #GenresListBox.SelectedItems.Count, StringFormat='Выбрано: {0}'}"/>
+      </StackPanel>
+
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <StackPanel Width="180" Spacing="8">
+          <TextBlock Text="Год публикации"/>
+          <NumericUpDown Minimum="1450"
+                         Maximum="2100"
+                         Value="{Binding PublishYear, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+        <StackPanel Width="180" Spacing="8">
+          <TextBlock Text="Кол-во на складе"/>
+          <NumericUpDown Minimum="0"
+                         Maximum="1000"
+                         Value="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+      </StackPanel>
+
+      <StackPanel Spacing="8">
+        <TextBlock Text="ISBN"/>
+        <TextBox Text="{Binding ISBN, UpdateSourceTrigger=PropertyChanged}"/>
+      </StackPanel>
+
+      <TextBlock Text="{Binding ErrorMessage}"
+                 Foreground="Red"
+                 TextWrapping="Wrap"
+                 MinHeight="32"/>
+
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+        <Button Content="Сохранить" Width="120" Click="SaveOnClick"/>
+        <Button Content="Отмена" Width="120" Click="CancelOnClick"/>
+      </StackPanel>
+    </StackPanel>
+  </Border>
+</Window>
