@@ -58,7 +58,7 @@ LibraryManager/
 ## Установка и запуск
 
 ### Требования
-- [.NET 8.0 SDK](https://dotnet.microsoft.com/download)
+- [.NET 10.0 SDK](https://dotnet.microsoft.com/download)
 - [Git](https://git-scm.com/) (опционально)
 
 ### Клонирование и запуск
